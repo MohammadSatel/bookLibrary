@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Library</title>
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+    <div id="d1">Book Library</div>
+    <br>
+    <button onclick="nextBook()">next book</button>
+    <button onclick="prevBook()">prev book</button>
+    <br>
+    <button onclick="firstBook()">first book</button>
+    <button onclick="lastBook()">last book</button>
+    <button onclick="dropBook()">drop book</button>
+    <br>
+    <hr>
+    <button onclick="addBook()">add book</button>
+    <br>
+    <p>book name<input type="text" id="bookName"></p>
+    <p>book author<input type="text" id="bookAuthor"></p>
+    <br>
+    <button onclick="allBooks()">all books</button>
+    <button onclick="allAuthors()">all authors</button>
+
+    <div id="display"></div>
+    <script>
+        let index = 0
+        let books = [
+            { "bookName": "A Place Called Home,", "author": "Preeti Shenoy", "category": "true story", "bookImage": '<br><img src="A Place Called Home.jfif" width="100px" height="100px"><br>' },
+            { "bookName": "Lal Salam,", "author": "Smriti Irani", "category": "historical", "bookImage": '<br><img src="Lal Salam.jfif" width="100px" height="100px"><br>' },
+            { "bookName": "Queen of Fire,", "author": "Devika Rangachari", "category": "inspiring", "bookImage": '<br><img src="Queen of Fire.jfif" width="100px" height="100px"><br>' },
+            { "bookName": "Hear Yourself,", "author": "Rawat", "category": "fiction", "bookImage": '<br><img src="Hear Yourself.jfif" width="100px" height="100px"><br>' },
+            { "bookName": "Monsoon,", "author": "Sahitya Akademi", "category": "journal", "bookImage": '<br><img src="Monsoon.jfif" width="100px" height="100px"><br>' },
+        ]
+        async function allBooks() {
+            display.innerHTML = " "
+            let server = "http://localhost:3000/books"
+            let res = await fetch(server).then(response => response.json())
+            console.table(res)
+            for (let index = 0; index < res.length; index++) {
+                display.innerHTML += res[index].bookName + "<br>"
+            }
+        }
+        async function allAuthors() {
+            display.innerHTML = " "
+            let server = "http://localhost:3000/books"
+            let res = await fetch(server).then(response => response.json())
+            console.table(res)
+            for (let index = 0; index < res.length; index++) {
+                display.innerHTML += res[index].author + "<br>"
+            }
+        }
+        function setBooks() {
+            if (books.length == 0) {
+                d1.innerHTML = `No books in library`
+                console.log(`no books in library`);
+            }
+            d1.innerHTML = books[index % books.length].bookName
+            d1.innerHTML += books[index % books.length].author
+            d1.innerHTML += books[index % books.length].bookImage
+            d1.innerHTML += books[index % books.length].category
+            console.table(books)
+            console.log(index)
+            localStorage.setItem("book name", books[index].bookName)
+            localStorage.setItem("author", books[index].author)
+            localStorage.setItem("category", books[index].category)
+
+        }
+        function nextBook() {
+            if (index < books.length - 1) {
+                index++
+                setBooks()
+            }
+        }
+        function prevBook() {
+            if (index > 0) {
+                index--
+                setBooks()
+            }
+        }
+        function firstBook() {
+            index = 0
+            setBooks()
+        }
+        function lastBook() {
+            index = books.length - 1
+            setBooks()
+        }
+        function dropBook() {
+            books.pop(index)
+            setBooks()
+        }
+        function addBook() {
+            let bookName = document.getElementById('bookName').value;
+            let bookAuthor = document.getElementById('bookAuthor').value;
+            console.log(bookName)
+            console.log(bookAuthor)
+            books.push({
+                bookName: bookName,
+                author: bookAuthor,
+
+
+            })
+
+        }
+    </script>
+</body>
+
+</html>

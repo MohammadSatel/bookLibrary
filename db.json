@@ -1,0 +1,9 @@
+{
+  "books": [
+    { "bookName": "A Place Called Home,", "author": "Preeti Shenoy", "category": "true story" },
+    { "bookName": "Lal Salam,", "author": "Smriti Irani", "category": "historical" },
+    { "bookName": "Queen of Fire,", "author": "Devika Rangachari", "category": "inspiring" },
+    { "bookName": "Hear Yourself,", "author": "Rawat", "category": "fiction" },
+    { "bookName": "Monsoon,", "author": "Sahitya Akademi", "category": "journal" }
+]
+}
